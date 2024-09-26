@@ -1,6 +1,10 @@
-export interface ILoginCredentials {
+export interface ILoginData{
     email: string;
     password: string;
+    message: string;
+   data: {
+         accessToken: string;
+   }
 }
 
 export interface IUser {
@@ -8,7 +12,7 @@ export interface IUser {
     password: string;
 }
 
-export default interface ILoginResponse {
-    user: IUser;
-    token: string;
+export default interface ILoginCredentials {
+   email: string;
+    password: string;
 }
