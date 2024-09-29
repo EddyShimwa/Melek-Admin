@@ -1,14 +1,15 @@
 import { useRef, useEffect } from "react";
-import { LoginSchema, LoginSchemaType } from "../../../validations/Login";
+import { LoginSchema, LoginSchemaType } from "../validations/Login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import Input from "../UI/InputText";
+import Input from "../components/Form/UI/InputText";
 import { useNavigate } from "react-router-dom";
-import useAuth from "../../../hooks/useAuth";
-import useCompanyProfile from "../../../hooks/useCompanyProfile";
-import { queryClient } from "../../../main";
-import ILoginCredentials from "../../../entities/User";
+import useAuth from "../hooks/useAuth";
+import useCompanyProfile from "../hooks/useCompanyProfile";
+import { queryClient } from "../main";
+import ILoginCredentials from "../entities/User";
+import Button from "../components/Button/Button";
 
 const LoginForm = () => {
   const { data } = useCompanyProfile();
@@ -57,7 +58,6 @@ const LoginForm = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative">
-      {/* Video Background */}
       {data && (
         <div className="absolute w-full h-full inset-0">
           <video
@@ -70,7 +70,7 @@ const LoginForm = () => {
         </div>
       )}
 
-      {/* Overlay with form */}
+  
       <div className="w-full h-full absolute inset-0 z-10 bg-black/70 flex items-center justify-center ">
         <div className="w-[90%] md:w-[50%] lg:w-[30%] h-max shadow-2xl bg-white relative z-20 border rounded-lg">
           <div className="flex items-center justify-center gap-3 px-5 pt-10">
@@ -94,19 +94,17 @@ const LoginForm = () => {
             />
 
             <div className="flex items-center gap-3 flex-wrap justify-center md:justify-between py-10">
-              <button
-                onClick={() => navigate("/")}
-                className="py-2 rounded-lg text-white text-sm w-36 bg-red-800 hover:bg-orange-600/80 flex items-center justify-center gap-4"
-              >
-                <FaArrowLeftLong />
-                <span>Back</span>
-              </button>
-              <button
-                type="submit"
-                className="py-2 text-white text-sm w-36 bg-app-green hover:bg-green-500 border rounded-lg"
-              >
-                Submit
-              </button>
+            <Button 
+              label="Back"
+              onClick={() => navigate("/")}
+              className="py-2 rounded-lg text-white text-sm w-36 bg-red-800 hover:bg-orange-600/80 flex items-center justify-center gap-4"
+              icon={<FaArrowLeftLong />} 
+            />
+            <Button 
+              label="Login"
+              type="submit"
+              className="py-2 text-white text-sm w-36 bg-app-green hover:bg-green-500 border rounded-lg"
+            />
             </div>
           </form>
         </div>

@@ -17,8 +17,8 @@ const useAuth = () =>
             localStorage.setItem('token', data.data.accessToken);
             toastSuccess(data.message);
         },
-        onError: () => {
-            toastError('Login Failed. Try Again');
+        onError: (error) => {
+            toastError(error.message);
         },
 
     });
