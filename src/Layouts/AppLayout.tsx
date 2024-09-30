@@ -1,20 +1,28 @@
 import React from "react";
-import Navbar from "../components/common/NavBar";
 import { Outlet } from "react-router-dom";
-import Heading from "../components/common/Heading";
+import DashboardNav, { NavItem } from "../components/common/NavItems";
+import { SidebarData } from "../data/sideBarData";
 
 const AppLayout: React.FC = () => {
-  return (
-    <>
-      <Heading />
-      <div className="flex">
-        <Navbar />
-        <div className="flex-1 p-4 ml-64">
-          <Outlet />
-        </div>
-      </div>
-    </>
-  );
+	return (
+		<>
+			<div className="flex w-full cursor-default">
+				<DashboardNav>
+					{SidebarData.map((item, idx) => (
+						<NavItem
+							key={idx}
+							Icon={item.icon}
+							title={item.title}
+							path={item.path}
+						/>
+					))}
+				</DashboardNav>
+				<div className="flex-1 h-max">
+					<Outlet />
+				</div>
+			</div>
+		</>
+	);
 };
 
 export default AppLayout;
