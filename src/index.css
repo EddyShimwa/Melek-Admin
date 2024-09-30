@@ -9,7 +9,7 @@
 		@apply m-0 p-0 box-border;
 	}
 	body {
-		@apply font-poppins bg-app-green/10;
+		@apply font-poppins;
 	}
 }
 
@@ -17,18 +17,4 @@
 
 @layer utilities {
 	/* here */
-	.swiper-custom {
-		--swiper-navigation-color: #fff;
-		--swiper-pagination-color: #fff;
-	}
-
-	.swiper-custom .swiper-button-next,
-	.swiper-custom .swiper-button-prev {
-		@apply bg-gray-600 rounded-full w-[40px] md:w-[50px] h-[40px] md:h-[50px] flex items-center justify-center mx-0 md:mx-10;
-	}
-
-	.swiper-custom .swiper-button-next::after,
-	.swiper-custom .swiper-button-prev::after {
-		@apply text-white bg-gray-600/50 font-bold text-lg md:text-xl;
-	}
 }

@@ -1,12 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
+import OffersTables from "./components/tables/OffersTables";
 import AppLayout from "./Layouts/AppLayout";
-import ErrorPage from "./pages/ErrorPage";
-import LoginForm from "./pages/loginForm";
+import CompanyProfile from "./pages/dashboard/company-profile";
 import Dashboard from "./pages/dashboard/dashboard";
 import Offers from "./pages/dashboard/offers";
-import WhyUs from "./pages/dashboard/why-us";
 import Values from "./pages/dashboard/values";
-import CompanyProfile from "./pages/dashboard/company-profile";
+import WhyUs from "./pages/dashboard/why-us";
+import ErrorPage from "./pages/ErrorPage";
+import LoginForm from "./pages/loginForm";
 
 const router = createBrowserRouter([
 	{
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
 	},
 	{
 		path: "/",
+		children: [{ index: true, element: <OffersTables /> }],
+	},
+	{
+		path: "/login",
 		element: <LoginForm />,
 	},
 ]);
