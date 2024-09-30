@@ -9,6 +9,7 @@ export default {
       colors: {
         ["app-green"]: "#05732F",
         ["title-dark-green"]: "#063211",
+        ["app-gray"]: "#e8e6e6"
       },
     },
   },

@@ -93,13 +93,7 @@ const LoginForm = () => {
               error={errors.password}
             />
 
-            <div className="flex items-center gap-3 flex-wrap justify-center md:justify-between py-10">
-            <Button 
-              label="Back"
-              onClick={() => navigate("/")}
-              className="py-2 rounded-lg text-white text-sm w-36 bg-red-800 hover:bg-orange-600/80 flex items-center justify-center gap-4"
-              icon={<FaArrowLeftLong />} 
-            />
+            <div className="flex items-center gap-3 flex-wrap justify-center py-10">
             <Button 
               label="Login"
               type="submit"
