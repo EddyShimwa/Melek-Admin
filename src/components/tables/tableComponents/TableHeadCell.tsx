@@ -3,7 +3,7 @@ interface Props {
 	className?: React.HTMLAttributes<HTMLElement>["className"];
 }
 
-const TableHeadCell = ({ title, className }: Props) => {
+const TableHeadCell = ({ title, className = "" }: Props) => {
 	return (
 		<th scope="col" className={`px-4 py-3 ${className}`}>
 			{title}
