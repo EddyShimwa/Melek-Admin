@@ -11,6 +11,9 @@ export default {
         ["title-dark-green"]: "#063211",
         ["app-gray"]: "#e8e6e6"
       },
+      fontSize: {
+        
+      }
     },
   },
   plugins: [],

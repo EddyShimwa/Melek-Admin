@@ -1,9 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
+import Input from "../components/Form/UI/InputText";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button/Button";
-import Input from "../components/Form/UI/InputText";
 import ILoginCredentials from "../entities/User";
 import useAuth from "../hooks/useAuth";
 import useCompanyProfile from "../hooks/useCompanyProfile";
