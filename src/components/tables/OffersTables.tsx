@@ -9,6 +9,9 @@ import TableHead from "./tableComponents/TableHead";
 import TableHeadCell from "./tableComponents/TableHeadCell";
 import TablePagination from "./tableComponents/TablePagination";
 import TableRow from "./tableComponents/TableRow";
+import { IoIosSearch } from "react-icons/io";
+import { Link } from "react-router-dom";
+import { FaPlus } from "react-icons/fa";
 
 const OffersTables = () => {
 	const { data, error, isLoading } = useOffers();
@@ -24,6 +27,30 @@ const OffersTables = () => {
 			<TableContainer className="min-h-screen">
 				<div className="p-5">
 					<h2 className="text-2xl font-semibold">Company Offers</h2>
+				</div>
+				<div className="w-full p-5 flex items-center justify-between">
+					<div className="flex items-center w-max justify-center h-9 rounded-md overflow-hidden">
+						<div className="h-full flex items-center border pl-3 bg-gray-100 rounded-l-md">
+							<IoIosSearch size={20} />
+							<input
+								type="text"
+								placeholder="Search By title..."
+								className="w-56 pl-3 h-full text-sm outline-none bg-transparent"
+							/>
+						</div>
+						<button className="h-full px-5 text-white text-sm bg-gray-700 hover:bg-gray-600">
+							Search
+						</button>
+					</div>
+					<Link to={""}>
+						<button
+							type="button"
+							className="h-9 px-4 rounded-md flex items-center justify-center gap-4 text-white text-sm bg-gray-700 hover:bg-gray-600"
+						>
+							<FaPlus />
+							<span>Add Offer</span>
+						</button>
+					</Link>
 				</div>
 				<Table className="w-full">
 					<TableHead>

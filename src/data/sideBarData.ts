@@ -30,6 +30,11 @@ export const SidebarData: SidebarItem[] = [
 		icon: FaIcons.FaTags,
 	},
 	{
+		title: "Milestones",
+		path: "/dashboard/milestones",
+		icon: FaIcons.FaAlignJustify,
+	},
+	{
 		title: "Company Profile",
 		path: "/dashboard/company-profile",
 		icon: FaIcons.FaBuilding,

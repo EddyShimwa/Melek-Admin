@@ -1,11 +1,7 @@
-import React from 'react'
+import OffersTables from "../../components/tables/OffersTables";
 
 const Offers = () => {
-  return (
-    <div>
-      <h1> Hello From Offers</h1>
-    </div>
-  )
-}
+	return <OffersTables />;
+};
 
-export default Offers
+export default Offers;

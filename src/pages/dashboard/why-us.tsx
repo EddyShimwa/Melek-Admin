@@ -1,11 +1,7 @@
-import React from 'react'
+import WhyUsTable from "../../components/tables/WhyUsTable";
 
 const WhyUs = () => {
-  return (
-    <div>
-      <h1>Hello from Why us</h1>
-    </div>
-  )
-}
+	return <WhyUsTable />;
+};
 
-export default WhyUs
+export default WhyUs;
