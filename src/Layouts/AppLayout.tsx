@@ -2,10 +2,11 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import DashboardNav, { NavItem } from "../components/common/NavItems";
 import { SidebarData } from "../data/sideBarData";
+import ProtectedRoute from "../utils/ProtectedRoutes";
 
 const AppLayout: React.FC = () => {
 	return (
-		<>
+		<ProtectedRoute>
 			<div className="flex w-full cursor-default">
 				<DashboardNav>
 					{SidebarData.map((item, idx) => (
@@ -21,7 +22,7 @@ const AppLayout: React.FC = () => {
 					<Outlet />
 				</div>
 			</div>
-		</>
+		</ProtectedRoute>
 	);
 };
 
