@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { FaPlus } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
+import { Link } from "react-router-dom";
+import { PaginationParams } from "../../entities/PaginateParams";
 import useMilestones from "../../hooks/useMilestones";
 import Table from "./tableComponents/Table";
 import TableContainer from "./tableComponents/TableContainer";
@@ -8,13 +11,17 @@ import TableHead from "./tableComponents/TableHead";
 import TableHeadCell from "./tableComponents/TableHeadCell";
 import TablePagination from "./tableComponents/TablePagination";
 import TableRow from "./tableComponents/TableRow";
-import { Link } from "react-router-dom";
-import { FaPlus } from "react-icons/fa";
-import { IoIosSearch } from "react-icons/io";
+
+const defaultQuery = {
+	pageNumber: 1,
+	take: 8,
+	search: null,
+};
 
 const MilestonesTable = () => {
+	const [querries, setQuerries] = useState<PaginationParams>(defaultQuery);
+	const { data, error, isLoading } = useMilestones(querries);
 	const [milestoneId, setMilestoneId] = useState<string | null>(null);
-	const { data, error, isLoading } = useMilestones();
 
 	if (error) throw new Error(error.message);
 
@@ -24,33 +31,7 @@ const MilestonesTable = () => {
 				<div className="p-5">
 					<h2 className="text-2xl font-semibold">Milestones</h2>
 				</div>
-				<div className="w-full p-5 flex items-center justify-between">
-					<div className="flex items-center w-max justify-center h-9 rounded-md overflow-hidden">
-						<div className="h-full flex items-center border pl-3 bg-gray-100 rounded-l-md">
-							<IoIosSearch size={20} />
-							<div className="px-2">
-								<select
-									defaultValue={""}
-									className="w-56 pl-3 h-full text-sm outline-none bg-transparent"
-								>
-									<option value="" disabled>
-										Search Year
-									</option>
-									{Array.from({ length: 91 }, (_, i) => 2010 + i).map(
-										(year) => (
-											<option key={year} value={year}>
-												{year}
-											</option>
-										),
-									)}
-								</select>
-							</div>
-						</div>
-						<button className="h-full px-5 text-white text-sm bg-gray-700 hover:bg-gray-600">
-							Search
-						</button>
-					</div>
-
+				<div className="w-full p-5 flex items-center justify-end">
 					<Link to={""}>
 						<button
 							type="button"
@@ -78,7 +59,7 @@ const MilestonesTable = () => {
 										))}
 									</TableRow>
 								))
-							: data.data.map((milestone) => (
+							: data?.data?.milestones.map((milestone) => (
 									<TableRow key={milestone.id}>
 										<TableDataCell>{milestone.year}</TableDataCell>
 										<TableDataCell>
@@ -116,11 +97,15 @@ const MilestonesTable = () => {
 				</Table>
 				<TablePagination
 					loading={isLoading}
-					currentPage={1}
-					dataLength={(data && data.data.length) as number}
-					handleItemsPerPageChange={(num) => console.log(num)}
-					handlePageChange={(page) => console.log(page)}
-					itemsPerPage={2}
+					currentPage={querries.pageNumber}
+					dataLength={(data && data.data.total) as number}
+					handleItemsPerPageChange={(take) =>
+						setQuerries((prev) => ({ ...prev, take }))
+					}
+					handlePageChange={(pageNumber) =>
+						setQuerries((prev) => ({ ...prev, pageNumber }))
+					}
+					itemsPerPage={querries.take}
 				/>
 			</TableContainer>
 		</main>

@@ -1,5 +1,9 @@
 import { Fragment, useState } from "react";
+import { FaPlus } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
+import { IoIosSearch } from "react-icons/io";
+import { Link } from "react-router-dom";
+import { PaginationParams } from "../../entities/PaginateParams";
 import useOffers from "../../hooks/useOffers";
 import OfferContentsTable from "./OfferContentsTable";
 import Table from "./tableComponents/Table";
@@ -9,12 +13,16 @@ import TableHead from "./tableComponents/TableHead";
 import TableHeadCell from "./tableComponents/TableHeadCell";
 import TablePagination from "./tableComponents/TablePagination";
 import TableRow from "./tableComponents/TableRow";
-import { IoIosSearch } from "react-icons/io";
-import { Link } from "react-router-dom";
-import { FaPlus } from "react-icons/fa";
+
+const defaultQuery = {
+	pageNumber: 1,
+	take: 8,
+	search: null,
+};
 
 const OffersTables = () => {
-	const { data, error, isLoading } = useOffers();
+	const [querries, setQuerries] = useState<PaginationParams>(defaultQuery);
+	const { data, error, isLoading } = useOffers(querries);
 	const [offerId, setOfferId] = useState<string | null>(null);
 	const [openOfferContentId, setOpenOfferContentId] = useState<string | null>(
 		null,
@@ -35,12 +43,15 @@ const OffersTables = () => {
 							<input
 								type="text"
 								placeholder="Search By title..."
-								className="w-56 pl-3 h-full text-sm outline-none bg-transparent"
+								onChange={(event) =>
+									setQuerries(() => ({
+										...defaultQuery,
+										search: event.target.value,
+									}))
+								}
+								className="w-72 pl-3 h-full text-sm outline-none bg-transparent"
 							/>
 						</div>
-						<button className="h-full px-5 text-white text-sm bg-gray-700 hover:bg-gray-600">
-							Search
-						</button>
 					</div>
 					<Link to={""}>
 						<button
@@ -68,7 +79,7 @@ const OffersTables = () => {
 										))}
 									</TableRow>
 								))
-							: data.data.map((offer) => (
+							: data?.data?.offers.map((offer) => (
 									<Fragment key={offer.id}>
 										<TableRow>
 											<TableDataCell>{offer.title}</TableDataCell>
@@ -118,11 +129,15 @@ const OffersTables = () => {
 				</Table>
 				<TablePagination
 					loading={isLoading}
-					currentPage={1}
-					dataLength={(data && data.data.length) as number}
-					handleItemsPerPageChange={(num) => console.log(num)}
-					handlePageChange={(page) => console.log(page)}
-					itemsPerPage={2}
+					currentPage={querries.pageNumber}
+					dataLength={(data && data.data.total) as number}
+					handleItemsPerPageChange={(take) =>
+						setQuerries((prev) => ({ ...prev, take }))
+					}
+					handlePageChange={(pageNumber) =>
+						setQuerries((prev) => ({ ...prev, pageNumber }))
+					}
+					itemsPerPage={querries.take}
 				/>
 			</TableContainer>
 		</main>

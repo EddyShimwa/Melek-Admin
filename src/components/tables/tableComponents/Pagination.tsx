@@ -1,38 +1,34 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 export interface PaginationProps {
 	totalItems: number;
 	itemsPerPage: number;
 	onPageChange: (page: number) => void;
+	currentPage: number;
 }
 
 const Pagination: FC<PaginationProps> = ({
 	totalItems,
 	itemsPerPage,
 	onPageChange,
+	currentPage,
 }) => {
-	const [currentPage, setCurrentPage] = useState(1);
 	const totalPages = Math.ceil(totalItems / itemsPerPage);
 
 	const handlePrevPage = () => {
 		if (currentPage > 1) {
-			const newPage = currentPage - 1;
-			setCurrentPage(newPage);
-			onPageChange(newPage);
+			onPageChange(currentPage - 1);
 		}
 	};
 
 	const handleNextPage = () => {
 		if (currentPage < totalPages) {
-			const newPage = currentPage + 1;
-			setCurrentPage(newPage);
-			onPageChange(newPage);
+			onPageChange(currentPage + 1);
 		}
 	};
 
 	const handlePageClick = (page: number) => {
-		setCurrentPage(page);
 		onPageChange(page);
 	};
 
@@ -41,9 +37,7 @@ const Pagination: FC<PaginationProps> = ({
 			return Array.from({ length: totalPages }, (_, index) => (
 				<div
 					key={index + 1}
-					className={`p-2 border-r cursor-pointer ${
-						currentPage === index + 1 ? "font-bold" : ""
-					}`}
+					className={`p-2 border-r cursor-pointer ${currentPage === index + 1 ? "font-bold" : ""}`}
 					onClick={() => handlePageClick(index + 1)}
 				>
 					{index + 1}
@@ -53,9 +47,7 @@ const Pagination: FC<PaginationProps> = ({
 			return (
 				<>
 					<div
-						className={`p-2 border-r cursor-pointer ${
-							currentPage === 1 ? "font-bold" : ""
-						}`}
+						className={`p-2 border-r cursor-pointer ${currentPage === 1 ? "font-bold" : ""}`}
 						onClick={() => handlePageClick(1)}
 					>
 						1
@@ -73,9 +65,7 @@ const Pagination: FC<PaginationProps> = ({
 						<div className="p-2 border-r">...</div>
 					)}
 					<div
-						className={`p-2 border-r cursor-pointer ${
-							currentPage === totalPages ? "font-bold" : ""
-						}`}
+						className={`p-2 border-r cursor-pointer ${currentPage === totalPages ? "font-bold" : ""}`}
 						onClick={() => handlePageClick(totalPages)}
 					>
 						{totalPages}

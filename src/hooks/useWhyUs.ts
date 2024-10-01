@@ -1,14 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
-import IWhyUs from "../entities/WhyUs";
+import IWhyUsResponse from "../entities/WhyUs";
 import APIClient from "../services/api-client";
 import ms from "ms";
+import { PaginationParams } from "../entities/PaginateParams";
 
-const apiClient = new APIClient<IWhyUs[]>("/why-us");
+const apiClient = new APIClient<IWhyUsResponse>("/why-us");
 
-const useWhyUs = () =>
+const useWhyUs = (querry: PaginationParams) =>
 	useQuery({
-		queryKey: ["why-us"],
-		queryFn: apiClient.fetch,
+		queryKey: ["why-us", querry],
+		queryFn: () =>
+			apiClient.fetch({
+				params: {
+					pageNumber: querry.pageNumber,
+					take: querry.take,
+					search: querry.search,
+				},
+			}),
 		staleTime: ms("5 min"),
 	});
 

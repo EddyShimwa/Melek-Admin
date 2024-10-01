@@ -21,14 +21,7 @@ const TablePagination: React.FC<AsideProps> = ({
 	if (loading) {
 		return (
 			<div className="w-full p-5 flex items-center justify-between">
-				{/* Left section: skeleton for items info */}
-				<div className="text-sm text-gray-500 flex gap-5">
-					<div className="h-10 bg-gray-200 rounded w-52 animate-pulse"></div>
-					<div className="h-10 bg-gray-200 rounded w-14 animate-pulse"></div>
-				</div>
-
-				{/* Right section: skeleton for pagination */}
-				<div className="h-10 bg-gray-200 rounded w-40 animate-pulse"></div>
+				{/* Loading skeleton */}
 			</div>
 		);
 	}
@@ -46,7 +39,7 @@ const TablePagination: React.FC<AsideProps> = ({
 				<span className="p-2 border-2 rounded-md">
 					<select
 						className="outline-none w-10 bg-transparent"
-						defaultValue={itemsPerPage}
+						value={itemsPerPage}
 						onChange={(e) => handleItemsPerPageChange(Number(e.target.value))}
 					>
 						{Array.from({ length: 8 }, (_, i) => (
@@ -60,6 +53,7 @@ const TablePagination: React.FC<AsideProps> = ({
 			<Pagination
 				itemsPerPage={itemsPerPage}
 				totalItems={dataLength}
+				currentPage={currentPage}
 				onPageChange={handlePageChange}
 			/>
 		</div>

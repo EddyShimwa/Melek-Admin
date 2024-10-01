@@ -5,8 +5,16 @@ export interface OfferContent {
 	offerId: string;
 }
 
-export default interface IOffer {
+interface IOffer {
 	id: string;
 	title: string;
 	contents: OfferContent[];
+}
+
+export default interface IOfferResponse {
+	offers: IOffer[];
+	total: number;
+	current_page: number;
+	hasNextPage: boolean;
+	total_pages: number;
 }
