@@ -7,7 +7,9 @@ export interface InputProps {
     error?: FieldError;
     register: UseFormRegister<any>;
     [key: string]: any;
-    label?: string
+    label?: string;
+    id?: string;
+    value?: string;
   }
 
 export type LoginData = {

@@ -1,7 +1,8 @@
-import { FC } from "react";
-import { FaWindowClose } from "react-icons/fa";
+import { FC, useState } from "react";
+import { FaPlus, FaWindowClose } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
 import { OfferContent } from "../../entities/Offer";
+import Dialog from "../common/Dialog";
 import Table from "./tableComponents/Table";
 import TableDataCell from "./tableComponents/TableDataCell";
 import TableHead from "./tableComponents/TableHead";
@@ -19,6 +20,10 @@ const OfferContentsTable: FC<Props> = ({
 	offerContents,
 	setOfferContentId,
 }) => {
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
+	const [selectedOfferContentId, setSelectedOfferContentId] = useState<
+		string | null
+	>(null);
 	return (
 		<div className="fixed top-0 left-0 w-screen h-screen overflow-scroll flex items-center justify-center bg-black/50 z-[1000]">
 			<div className="absolute w-full h-full">
@@ -35,6 +40,16 @@ const OfferContentsTable: FC<Props> = ({
 				<h2 className="text-2xl font-semibold text-black pb-5">
 					{relation} contents
 				</h2>
+				<div className="w-full p-5 flex items-center justify-end">
+					<button
+						type="button"
+						onClick={() => setIsDialogOpen((curr) => !curr)}
+						className="h-9 px-4 rounded-md flex items-center justify-center gap-4 text-white text-sm bg-gray-700 hover:bg-gray-600"
+					>
+						<FaPlus />
+						<span>Add content</span>
+					</button>
+				</div>
 				<Table className="bg-white w-full rounded-lg shadow-md">
 					<TableHead>
 						{/* <TableHeadCell title="Related Offer" /> */}
@@ -45,7 +60,14 @@ const OfferContentsTable: FC<Props> = ({
 					<tbody>
 						{offerContents?.map((offerContent) => (
 							<TableRow key={offerContent.id}>
-								{/* <TableDataCell>{relation}</TableDataCell> */}
+								<Dialog
+									isOpen={isDialogOpen}
+									toggleIsOpen={() => setIsDialogOpen((curr) => !curr)}
+								>
+									<div className="text-4xl text-white font-bold">
+										Create/update offer content
+									</div>
+								</Dialog>
 								<TableDataCell>{offerContent.title}</TableDataCell>
 								<TableDataCell>
 									{offerContent.content.length > 100
@@ -53,8 +75,27 @@ const OfferContentsTable: FC<Props> = ({
 										: offerContent.content}
 								</TableDataCell>
 								<TableDataCell className="w-20 flex items-center justify-center">
-									<div className="p-2 hover:bg-gray-300 rounded-lg">
+									<div
+										onClick={() =>
+											setSelectedOfferContentId((curr) =>
+												curr === offerContent.id ? null : offerContent.id,
+											)
+										}
+										className="p-2 hover:bg-gray-300 rounded-lg"
+									>
 										<HiDotsVertical size={20} />
+										{selectedOfferContentId === offerContent.id && (
+											<div className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute right-full top-0 mr-6">
+												<ul className="py-2 text-sm text-gray-700">
+													<li className="block px-4 py-2 hover:bg-gray-100">
+														Edit
+													</li>
+													<li className="block px-4 py-2 hover:bg-gray-100">
+														Delete
+													</li>
+												</ul>
+											</div>
+										)}
 									</div>
 								</TableDataCell>
 							</TableRow>

@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import ms from "ms";
-import IOfferResponse from "../entities/Offer";
-import { PaginationParams } from "../entities/PaginateParams";
-import APIClient from "../services/api-client";
+import IOfferResponse from "../../entities/Offer";
+import { PaginationParams } from "../../entities/PaginateParams";
+import APIClient from "../../services/api-client";
 
 const apiClient = new APIClient<IOfferResponse>("/offers");
 

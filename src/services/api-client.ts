@@ -50,9 +50,15 @@ class APIClient<T, RequestType = void> {
 
 	fetch = (config: AxiosRequestConfig) =>
 		API.get<FetchResponse<T>>(this.endpoint, config).then((res) => res.data);
-    
-	
-		post = (data: RequestType, config?: AxiosRequestConfig) =>
+
+	post = (data: RequestType, config?: AxiosRequestConfig) =>
 		API.post<T>(this.endpoint, data, config).then((res) => res.data);
+
+	update = (data: RequestType, config?: AxiosRequestConfig) =>
+		API.patch<FetchResponse<T>>(this.endpoint, data, config).then(
+			(res) => res.data,
+		);
+	delete = (config?: AxiosRequestConfig) =>
+		API.delete<FetchResponse<T>>(this.endpoint, config).then((res) => res.data);
 }
 export default APIClient;

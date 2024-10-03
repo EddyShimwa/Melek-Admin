@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
-import { Link } from "react-router-dom";
 import { PaginationParams } from "../../entities/PaginateParams";
 import useMilestones from "../../hooks/useMilestones";
+import Dialog from "../common/Dialog";
 import Table from "./tableComponents/Table";
 import TableContainer from "./tableComponents/TableContainer";
 import TableDataCell from "./tableComponents/TableDataCell";
@@ -19,6 +19,7 @@ const defaultQuery = {
 };
 
 const MilestonesTable = () => {
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [querries, setQuerries] = useState<PaginationParams>(defaultQuery);
 	const { data, error, isLoading } = useMilestones(querries);
 	const [milestoneId, setMilestoneId] = useState<string | null>(null);
@@ -27,20 +28,27 @@ const MilestonesTable = () => {
 
 	return (
 		<main>
+			<Dialog
+				isOpen={isDialogOpen}
+				toggleIsOpen={() => setIsDialogOpen((curr) => !curr)}
+			>
+				<div className="text-4xl text-white font-bold">
+					Create/update Milestone
+				</div>
+			</Dialog>
 			<TableContainer className="min-h-screen">
 				<div className="p-5">
 					<h2 className="text-2xl font-semibold">Milestones</h2>
 				</div>
 				<div className="w-full p-5 flex items-center justify-end">
-					<Link to={""}>
-						<button
-							type="button"
-							className="h-9 px-4 rounded-md flex items-center justify-center gap-4 text-white text-sm bg-gray-700 hover:bg-gray-600"
-						>
-							<FaPlus />
-							<span>Add Milestone</span>
-						</button>
-					</Link>
+					<button
+						type="button"
+						onClick={() => setIsDialogOpen((curr) => !curr)}
+						className="h-9 px-4 rounded-md flex items-center justify-center gap-4 text-white text-sm bg-gray-700 hover:bg-gray-600"
+					>
+						<FaPlus />
+						<span>Add Milestone</span>
+					</button>
 				</div>
 				<Table className="w-full">
 					<TableHead>

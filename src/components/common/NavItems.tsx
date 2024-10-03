@@ -82,21 +82,25 @@ export default function DashboardNav({ children }: Props) {
 					<sidebarContext.Provider value={{ expanded }}>
 						<ul className="flex-1 p-3">{children}</ul>
 					</sidebarContext.Provider>
-					{expanded && (
-						<div className="border-t flex items-center p-3">
-							<div className="flex justify-between items-center overflow-hidden transition-all w-52 ml-3">
+					<div className="border-t flex items-center p-3">
+						<div
+							className={`flex ${expanded ? "justify-between gap-3" : "justify-center"} items-center overflow-hidden transition-all w-max ml-3`}
+						>
+							{expanded && (
 								<div className="leading-4">
 									<h4 className="font-semibold">{userData.name}</h4>
 									<h6 className="text-xs text-gray-600">{userData.email}</h6>
 								</div>
+							)}
+							<div className="p-2 hover:bg-green-200 rounded-lg">
 								<MoreVertical
 									size={20}
-									className="cursor-pointer hover:bg-green-200 rounded-lg"
+									className="cursor-pointer"
 									onClick={() => setShowModal(true)}
 								/>
 							</div>
 						</div>
-					)}
+					</div>
 				</nav>
 			</aside>
 		</>
@@ -107,13 +111,13 @@ export function NavItem({ Icon, path, title }: SidebarItem) {
 	const { expanded } = useContext(sidebarContext);
 
 	return (
-		<IconContext.Provider value={{}}>
+		<IconContext.Provider value={{ size: "1.3em" }}>
 			<li>
 				<NavLink
 					to={path}
 					end
 					className={({ isActive }) =>
-						`relative text-sm flex items-center py-2 px-3 my-5 
+						`relative text-sm flex items-center justify-center py-2 px-3 my-5 
                         font-medium rounded-md cursor-pointer 
                         transition-colors group
                         ${

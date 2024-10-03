@@ -1,17 +1,17 @@
 import { useState } from "react";
+import { FaPlus } from "react-icons/fa";
+import { HiDotsVertical } from "react-icons/hi";
+import { IoIosSearch } from "react-icons/io";
+import { PaginationParams } from "../../entities/PaginateParams";
 import useWhyUs from "../../hooks/useWhyUs";
+import Dialog from "../common/Dialog";
 import Table from "./tableComponents/Table";
 import TableContainer from "./tableComponents/TableContainer";
 import TableDataCell from "./tableComponents/TableDataCell";
 import TableHead from "./tableComponents/TableHead";
 import TableHeadCell from "./tableComponents/TableHeadCell";
-import TableRow from "./tableComponents/TableRow";
-import { HiDotsVertical } from "react-icons/hi";
 import TablePagination from "./tableComponents/TablePagination";
-import { IoIosSearch } from "react-icons/io";
-import { Link } from "react-router-dom";
-import { FaPlus } from "react-icons/fa";
-import { PaginationParams } from "../../entities/PaginateParams";
+import TableRow from "./tableComponents/TableRow";
 
 const defaultQuery = {
 	pageNumber: 1,
@@ -20,6 +20,7 @@ const defaultQuery = {
 };
 
 const WhyUsTable = () => {
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [querries, setQuerries] = useState<PaginationParams>(defaultQuery);
 	const { data, error, isLoading } = useWhyUs(querries);
 	const [whyIs, setWhyIs] = useState<string | null>(null);
@@ -28,6 +29,14 @@ const WhyUsTable = () => {
 
 	return (
 		<main>
+			<Dialog
+				isOpen={isDialogOpen}
+				toggleIsOpen={() => setIsDialogOpen((curr) => !curr)}
+			>
+				<div className="text-4xl text-white font-bold">
+					Create/update Why Us
+				</div>
+			</Dialog>
 			<TableContainer className="min-h-screen">
 				<div className="p-5">
 					<h2 className="text-2xl font-semibold">Why Us</h2>
@@ -49,15 +58,15 @@ const WhyUsTable = () => {
 							/>
 						</div>
 					</div>
-					<Link to={""}>
-						<button
-							type="button"
-							className="h-9 px-4 rounded-md flex items-center justify-center gap-4 text-white text-sm bg-gray-700 hover:bg-gray-600"
-						>
-							<FaPlus />
-							<span>Add Why Us</span>
-						</button>
-					</Link>
+
+					<button
+						type="button"
+						onClick={() => setIsDialogOpen((curr) => !curr)}
+						className="h-9 px-4 rounded-md flex items-center justify-center gap-4 text-white text-sm bg-gray-700 hover:bg-gray-600"
+					>
+						<FaPlus />
+						<span>Add Why Us</span>
+					</button>
 				</div>
 				<Table className="w-full">
 					<TableHead>

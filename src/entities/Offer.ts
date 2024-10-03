@@ -5,10 +5,14 @@ export interface OfferContent {
 	offerId: string;
 }
 
-interface IOffer {
+export interface IOffer {
 	id: string;
 	title: string;
 	contents: OfferContent[];
+}
+export interface IAddOffer {
+	id: string;
+	title: string;
 }
 
 export default interface IOfferResponse {
