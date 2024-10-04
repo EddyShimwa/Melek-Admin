@@ -3,8 +3,14 @@ import { FaPlus } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
 import { IoIosSearch } from "react-icons/io";
 import { PaginationParams } from "../../entities/PaginateParams";
-import useValues from "../../hooks/useValue"; // Assuming the custom hook is already created
+import { IValue } from "../../entities/Value";
+import useDeleteValue from "../../hooks/values/useDeleteValue";
+import useValues from "../../hooks/values/useValue";
+import DeleteModal from "../common/DeleteModal";
 import Dialog from "../common/Dialog";
+import FormModal from "../common/FormModal";
+import NoDataFound from "../common/NoDataFound";
+import ValueForm from "../Form/TableForms/ValueForm";
 import Table from "./tableComponents/Table";
 import TableContainer from "./tableComponents/TableContainer";
 import TableDataCell from "./tableComponents/TableDataCell";
@@ -20,21 +26,52 @@ const defaultQuery = {
 };
 
 const ValuesTable = () => {
+	const [isDelete, setIsDelete] = useState(false);
+	const [deleteId, setDeleteId] = useState<string | null>(null);
+	const deleteValue = useDeleteValue(deleteId as string);
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [querries, setQuerries] = useState<PaginationParams>(defaultQuery);
 	const { data, error, isLoading } = useValues(querries);
 	const [openValueId, setOpenValueId] = useState<string | null>(null);
+	const [seletectedValue, setSeletectedValue] = useState<IValue | null>(null);
 
 	if (error) throw new Error(error.message);
+
+	const handleDelete = () => {
+		deleteValue.mutate(undefined, {
+			onSuccess: () => {
+				setIsDelete(false);
+			},
+		});
+	};
 
 	return (
 		<main>
 			<Dialog
 				isOpen={isDialogOpen}
 				toggleIsOpen={() => setIsDialogOpen((curr) => !curr)}
+				className="bg-black/70"
 			>
-				<div className="text-4xl text-white font-bold">Create/update Value</div>
+				<FormModal title={`Add New Value`}>
+					<ValueForm
+						value={seletectedValue as IValue}
+						toggleModal={() => setIsDialogOpen((curr) => !curr)}
+					/>
+				</FormModal>
 			</Dialog>
+
+			{/* delete modal */}
+			<Dialog
+				isOpen={isDelete}
+				toggleIsOpen={() => setIsDelete((curr) => !curr)}
+				className="bg-black/70"
+			>
+				<DeleteModal
+					toggleModal={() => setIsDelete((curr) => !curr)}
+					handleDelete={handleDelete}
+				/>
+			</Dialog>
+
 			<TableContainer className="min-h-screen">
 				<div className="p-5">
 					<h2 className="text-2xl font-semibold">Company Values</h2>
@@ -59,7 +96,10 @@ const ValuesTable = () => {
 
 					<button
 						type="button"
-						onClick={() => setIsDialogOpen((curr) => !curr)}
+						onClick={() => {
+							setSeletectedValue(null);
+							setIsDialogOpen((curr) => !curr);
+						}}
 						className="h-9 px-4 rounded-md flex items-center justify-center gap-4 text-white text-sm bg-gray-700 hover:bg-gray-600"
 					>
 						<FaPlus />
@@ -74,7 +114,7 @@ const ValuesTable = () => {
 					</TableHead>
 					<tbody>
 						{isLoading || !data?.data
-							? Array.from({ length: 10 }, (_, i) => (
+							? Array.from({ length: 8 }, (_, i) => (
 									<TableRow key={i}>
 										{Array.from({ length: 3 }, (_, i) => (
 											<TableDataCell key={i} className="h-14">
@@ -105,10 +145,22 @@ const ValuesTable = () => {
 													{openValueId === value.id && (
 														<div className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute right-full top-0 mr-6">
 															<ul className="py-2 text-sm text-gray-700">
-																<li className="block px-4 py-2 hover:bg-gray-100">
+																<li
+																	onClick={() => {
+																		setSeletectedValue(value);
+																		setIsDialogOpen((curr) => !curr);
+																	}}
+																	className="block px-4 py-2 hover:bg-gray-100"
+																>
 																	Edit
 																</li>
-																<li className="block px-4 py-2 hover:bg-gray-100">
+																<li
+																	onClick={() => {
+																		setDeleteId(value.id);
+																		setIsDelete(true);
+																	}}
+																	className="block px-4 py-2 hover:bg-gray-100"
+																>
 																	Delete
 																</li>
 															</ul>
@@ -121,18 +173,26 @@ const ValuesTable = () => {
 								))}
 					</tbody>
 				</Table>
-				<TablePagination
-					loading={isLoading}
-					currentPage={querries.pageNumber}
-					dataLength={(data && data.data.total) as number}
-					handleItemsPerPageChange={(take) =>
-						setQuerries((prev) => ({ ...prev, take }))
-					}
-					handlePageChange={(pageNumber) =>
-						setQuerries((prev) => ({ ...prev, pageNumber }))
-					}
-					itemsPerPage={querries.take}
-				/>
+				{data?.data?.values.length === 0 && (
+					<NoDataFound
+						title="No Company Values Found!"
+						description="Try adding some by tapping on Add New Value"
+					/>
+				)}
+				{data && data.data.values.length > 0 && (
+					<TablePagination
+						loading={isLoading}
+						currentPage={querries.pageNumber}
+						dataLength={(data && data.data.total) as number}
+						handleItemsPerPageChange={(take) =>
+							setQuerries((prev) => ({ ...prev, take }))
+						}
+						handlePageChange={(pageNumber) =>
+							setQuerries((prev) => ({ ...prev, pageNumber }))
+						}
+						itemsPerPage={querries.take}
+					/>
+				)}
 			</TableContainer>
 		</main>
 	);

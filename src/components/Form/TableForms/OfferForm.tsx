@@ -2,13 +2,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { FaPlus } from "react-icons/fa";
+import { IOffer } from "../../../entities/Offer";
 import useAddOffer from "../../../hooks/offers/useAddOffer";
+import useUpdateOffer from "../../../hooks/offers/useUpdateOffer";
 import { OfferSchema, OfferSchemaType } from "../../../validations/Offer";
 import FormButton from "../FormButton";
 import FormField from "../FormField";
 import InputField from "../InputField";
-import { IOffer } from "../../../entities/Offer";
-import useUpdateOffer from "../../../hooks/offers/useUpdateOffer";
 
 interface Props {
 	toggleModal: () => void;

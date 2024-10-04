@@ -9,6 +9,7 @@ import useOffers from "../../hooks/offers/useOffers";
 import DeleteModal from "../common/DeleteModal";
 import Dialog from "../common/Dialog";
 import FormModal from "../common/FormModal";
+import NoDataFound from "../common/NoDataFound";
 import OfferForm from "../Form/TableForms/OfferForm";
 import OfferContentsTable from "./OfferContentsTable";
 import Table from "./tableComponents/Table";
@@ -122,7 +123,7 @@ const OffersTables = () => {
 
 					<tbody>
 						{isLoading || !data
-							? Array.from({ length: 10 }, (_, i) => (
+							? Array.from({ length: 8 }, (_, i) => (
 									<TableRow key={i}>
 										{Array.from({ length: 2 }, (_, j) => (
 											<TableDataCell key={j} className="h-14">
@@ -197,23 +198,25 @@ const OffersTables = () => {
 				</Table>
 
 				{data?.data?.offers.length === 0 && (
-					<div className="w-full flex items-center justify-center p-5">
-						No Offers found!
-					</div>
+					<NoDataFound
+						title="No Offers Found!"
+						description="Try adding some by tapping on Add Offer"
+					/>
 				)}
-
-				<TablePagination
-					loading={isLoading}
-					currentPage={querries.pageNumber}
-					dataLength={(data && data.data.total) as number}
-					handleItemsPerPageChange={(take) =>
-						setQuerries((prev) => ({ ...prev, take }))
-					}
-					handlePageChange={(pageNumber) =>
-						setQuerries((prev) => ({ ...prev, pageNumber }))
-					}
-					itemsPerPage={querries.take}
-				/>
+				{(data?.data?.offers as IOffer[])?.length > 0 && (
+					<TablePagination
+						loading={isLoading}
+						currentPage={querries.pageNumber}
+						dataLength={(data && data.data.total) as number}
+						handleItemsPerPageChange={(take) =>
+							setQuerries((prev) => ({ ...prev, take }))
+						}
+						handlePageChange={(pageNumber) =>
+							setQuerries((prev) => ({ ...prev, pageNumber }))
+						}
+						itemsPerPage={querries.take}
+					/>
+				)}
 			</TableContainer>
 		</main>
 	);

@@ -1,4 +1,4 @@
-interface IWhyUs {
+export interface IWhyUs {
 	id: string;
 	title: string;
 	description: string;

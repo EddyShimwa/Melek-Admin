@@ -69,6 +69,7 @@ const OfferContentForm: FC<Props> = ({ id, toggleModal, offerContent }) => {
 				<TextAreaField
 					name="content"
 					id="description"
+					rows={4}
 					placeholder="Enter offer content description"
 					register={register}
 					error={errors.content}

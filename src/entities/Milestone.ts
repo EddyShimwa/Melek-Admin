@@ -1,7 +1,13 @@
-interface IMilestone {
+export interface IMilestone {
 	id: string;
 	year: number;
 	month: string;
+	description: string;
+}
+
+export interface IAddMilestone {
+	id: string;
+	year: number;
 	description: string;
 }
 

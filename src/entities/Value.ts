@@ -1,4 +1,4 @@
-interface IValue {
+export interface IValue {
 	id: string;
 	title: string;
 	description: string;

@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import IWhyUsResponse from "../entities/WhyUs";
-import APIClient from "../services/api-client";
 import ms from "ms";
-import { PaginationParams } from "../entities/PaginateParams";
+import { PaginationParams } from "../../entities/PaginateParams";
+import IWhyUsResponse from "../../entities/WhyUs";
+import APIClient from "../../services/api-client";
 
 const apiClient = new APIClient<IWhyUsResponse>("/why-us");
 

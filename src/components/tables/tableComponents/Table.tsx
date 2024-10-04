@@ -7,8 +7,9 @@ interface Props {
 
 const Table = ({ children, className }: Props) => {
 	return (
-		<table className={`text-sm text-left text-gray-500 ${className}`}>
+		<table className={`text-sm text-left text-gray-500 relative ${className}`}>
 			{children}
+			<tfoot className="w-full h-20" />
 		</table>
 	);
 };

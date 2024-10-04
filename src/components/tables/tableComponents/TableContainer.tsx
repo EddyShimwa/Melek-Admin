@@ -7,8 +7,8 @@ interface Props {
 
 const TableContainer = ({ children, className }: Props) => {
 	return (
-		<div className={`w-full bg-white p-5 ${className}`}>
-			<div className="h-max w-full min-w-[700px] overflow-x-auto shadow-md rounded-lg">
+		<div className={`w-full h-screen bg-white p-5 ${className}`}>
+			<div className="h-full w-full min-w-[700px] overflow-x-auto shadow-md rounded-lg">
 				<div className="w-full h-full shadow-inner rounded-lg relative">
 					{children}
 				</div>

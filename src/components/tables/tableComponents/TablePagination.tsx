@@ -21,13 +21,13 @@ const TablePagination: React.FC<AsideProps> = ({
 	if (loading) {
 		return (
 			<div className="w-full p-5 flex items-center justify-between">
-				{/* Loading skeleton */}
+				{/* Load a skeleton */}
 			</div>
 		);
 	}
 
 	return (
-		<div className="w-full p-5 flex items-center justify-between">
+		<div className="w-full p-5 flex items-center justify-between sticky bg-white top-full h-20 border-t">
 			<div className="text-sm text-gray-500">
 				Showing{" "}
 				<span className="text-black font-medium">
