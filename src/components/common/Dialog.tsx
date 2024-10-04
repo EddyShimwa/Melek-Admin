@@ -16,7 +16,9 @@ const Dialog: FC<Props> = ({ isOpen, children, toggleIsOpen, className }) => {
 			>
 				<div className="relative w-full h-full  flex items-center justify-center">
 					<div
-						onClick={() => toggleIsOpen()}
+						onClick={() => {
+							toggleIsOpen();
+						}}
 						className="p-2 absolute top-10 right-10 bg-white cursor-pointer hover:bg-gray-300 rounded-lg"
 					>
 						<FaWindowClose size={24} color="red" />

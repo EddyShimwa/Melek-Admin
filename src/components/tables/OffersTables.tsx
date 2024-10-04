@@ -2,7 +2,11 @@ import { Fragment, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { HiDotsVertical } from "react-icons/hi";
 import { IoIosSearch } from "react-icons/io";
+import { IOffer } from "../../entities/Offer";
 import { PaginationParams } from "../../entities/PaginateParams";
+import useDeleteOffer from "../../hooks/offers/useDeleteOffer";
+import useOffers from "../../hooks/offers/useOffers";
+import DeleteModal from "../common/DeleteModal";
 import Dialog from "../common/Dialog";
 import FormModal from "../common/FormModal";
 import OfferForm from "../Form/TableForms/OfferForm";
@@ -14,10 +18,6 @@ import TableHead from "./tableComponents/TableHead";
 import TableHeadCell from "./tableComponents/TableHeadCell";
 import TablePagination from "./tableComponents/TablePagination";
 import TableRow from "./tableComponents/TableRow";
-import useOffers from "../../hooks/offers/useOffers";
-import { IOffer } from "../../entities/Offer";
-import useDeleteOffer from "../../hooks/offers/useDeleteOffer";
-import DeleteModal from "../common/DeleteModal";
 
 const defaultQuery: PaginationParams = {
 	pageNumber: 1,
@@ -26,20 +26,20 @@ const defaultQuery: PaginationParams = {
 };
 
 const OffersTables = () => {
+	const [isDelete, setIsDelete] = useState(false);
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 	const [querries, setQuerries] = useState<PaginationParams>(defaultQuery);
 	const { data, error, isLoading } = useOffers(querries);
 	const [deleteId, setDeleteId] = useState<string | null>(null);
 	const deleteOffer = useDeleteOffer(deleteId as string);
 	const [offerId, setOfferId] = useState<string | null>(null);
+	const [selectedOffer, setSelectedOffer] = useState<IOffer | null>(null);
 	const [openOfferContentId, setOpenOfferContentId] = useState<string | null>(
 		null,
 	);
-	const [selectedOffer, setSelectedOffer] = useState<IOffer | null>(null);
-	const [isDelete, setIsDelete] = useState(false);
 
 	if (error) {
-		return <div className="error-message">{error.message}</div>;
+		throw new Error(error.message);
 	}
 
 	const handleDelete = () => {
@@ -58,7 +58,7 @@ const OffersTables = () => {
 				toggleIsOpen={() => setIsDialogOpen((curr) => !curr)}
 				className="bg-black/70"
 			>
-				<FormModal title="Create New Offer">
+				<FormModal title={`${selectedOffer ? "Update" : "Create New"} Offer`}>
 					<OfferForm
 						offer={selectedOffer as IOffer}
 						toggleModal={() => setIsDialogOpen((curr) => !curr)}
@@ -131,67 +131,76 @@ const OffersTables = () => {
 										))}
 									</TableRow>
 								))
-							: data.data.offers.map((offer) => (
-									<Fragment key={offer.id}>
-										<TableRow>
-											<TableDataCell>{offer.title}</TableDataCell>
-											<TableDataCell className="w-20 flex items-center justify-center">
-												<div
-													onClick={() =>
-														setOfferId((curr) =>
-															curr === offer.id ? null : offer.id,
-														)
-													}
-													className={`p-2 relative cursor-pointer hover:bg-gray-300 rounded-lg ${offerId === offer.id ? "bg-gray-300" : ""}`}
-												>
-													<HiDotsVertical size={20} />
-													{offerId === offer.id && (
-														<div className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute right-full top-0 mr-6">
-															<ul className="py-2 text-sm text-gray-700">
-																<li
-																	onClick={() =>
-																		setOpenOfferContentId(offer.id)
-																	}
-																	className="block px-4 py-2 hover:bg-gray-100"
-																>
-																	View Contents
-																</li>
-																<li
-																	onClick={() => {
-																		setSelectedOffer(offer);
-																		setIsDialogOpen(true);
-																	}}
-																	className="block px-4 py-2 hover:bg-gray-100"
-																>
-																	Edit
-																</li>
-																<li
-																	onClick={() => {
-																		setDeleteId(offer.id);
-																		setIsDelete(true);
-																	}}
-																	className="block px-4 py-2 hover:bg-gray-100"
-																>
-																	Delete
-																</li>
-															</ul>
-														</div>
-													)}
-												</div>
-											</TableDataCell>
-										</TableRow>
+							: data.data.offers.length > 0
+								? data.data.offers.map((offer) => (
+										<Fragment key={offer.id}>
+											<TableRow>
+												<TableDataCell>{offer.title}</TableDataCell>
+												<TableDataCell className="w-20 flex items-center justify-center">
+													<div
+														onClick={() =>
+															setOfferId((curr) =>
+																curr === offer.id ? null : offer.id,
+															)
+														}
+														className={`p-2 relative cursor-pointer hover:bg-gray-300 rounded-lg ${offerId === offer.id ? "bg-gray-300" : ""}`}
+													>
+														<HiDotsVertical size={20} />
+														{offerId === offer.id && (
+															<div className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute right-full top-0 mr-6">
+																<ul className="py-2 text-sm text-gray-700">
+																	<li
+																		onClick={() =>
+																			setOpenOfferContentId(offer.id)
+																		}
+																		className="block px-4 py-2 hover:bg-gray-100"
+																	>
+																		View Contents
+																	</li>
+																	<li
+																		onClick={() => {
+																			setSelectedOffer(offer);
+																			setIsDialogOpen(true);
+																		}}
+																		className="block px-4 py-2 hover:bg-gray-100"
+																	>
+																		Edit
+																	</li>
+																	<li
+																		onClick={() => {
+																			setDeleteId(offer.id);
+																			setIsDelete(true);
+																		}}
+																		className="block px-4 py-2 hover:bg-gray-100"
+																	>
+																		Delete
+																	</li>
+																</ul>
+															</div>
+														)}
+													</div>
+												</TableDataCell>
+											</TableRow>
 
-										{openOfferContentId === offer.id && (
-											<OfferContentsTable
-												relation={offer.title}
-												offerContents={offer.contents}
-												setOfferContentId={setOpenOfferContentId}
-											/>
-										)}
-									</Fragment>
-								))}
+											{openOfferContentId === offer.id && (
+												<OfferContentsTable
+													id={offer.id}
+													relation={offer.title}
+													offerContents={offer.contents}
+													setOfferContentId={setOpenOfferContentId}
+												/>
+											)}
+										</Fragment>
+									))
+								: null}
 					</tbody>
 				</Table>
+
+				{data?.data?.offers.length === 0 && (
+					<div className="w-full flex items-center justify-center p-5">
+						No Offers found!
+					</div>
+				)}
 
 				<TablePagination
 					loading={isLoading}
