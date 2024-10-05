@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/Button/Button";
 import ILoginCredentials from "../entities/User";
 import useAuth from "../hooks/useAuth";
-import useCompanyProfile from "../hooks/useCompanyProfile";
+import useCompanyProfile from "../hooks/companyProfile/useCompanyProfile";
 import { queryClient } from "../main";
 import { LoginSchema, LoginSchemaType } from "../validations/Login";
 

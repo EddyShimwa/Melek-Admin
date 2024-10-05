@@ -1,11 +1,11 @@
-import React from 'react'
+import CompanyProfilePage from "../../components/tables/CompanyProfileTable";
 
 const CompanyProfile = () => {
-  return (
-    <div>
-      <h1>Hello from Company profile</h1>
-    </div>
-  )
-}
+	return (
+		<div>
+			<CompanyProfilePage />
+		</div>
+	);
+};
 
-export default CompanyProfile
+export default CompanyProfile;

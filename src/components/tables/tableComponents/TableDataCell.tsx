@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 interface Props {
 	children: ReactNode | string;
 	className?: React.HTMLAttributes<HTMLElement>["className"];
+	colSpan?: number;
 }
 
 const TableDataCell = ({ children, className }: Props) => {

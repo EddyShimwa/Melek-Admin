@@ -3,11 +3,12 @@ import { Outlet } from "react-router-dom";
 import DashboardNav, { NavItem } from "../components/common/NavItems";
 import { SidebarData } from "../data/sideBarData";
 import ProtectedRoute from "../utils/ProtectedRoutes";
+import Footer from "../components/common/Footer";
 
 const AppLayout: React.FC = () => {
 	return (
 		<ProtectedRoute>
-			<div className="flex w-full cursor-default">
+			<div className="flex w-full min-h-screen">
 				<DashboardNav>
 					{SidebarData.map((item, idx) => (
 						<NavItem
@@ -18,8 +19,13 @@ const AppLayout: React.FC = () => {
 						/>
 					))}
 				</DashboardNav>
-				<div className="flex-1 h-max">
-					<Outlet />
+
+				<div className="flex flex-col flex-1 min-h-screen">
+					<div className="flex-grow">
+						<Outlet />
+					</div>
+
+					<Footer />
 				</div>
 			</div>
 		</ProtectedRoute>

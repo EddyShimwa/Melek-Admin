@@ -11,4 +11,16 @@ export default interface ICompanyProfile {
 	email: string;
 	createdAt: Date;
 	updatedAt: Date;
+	message: string;
+	length: number;
+}
+
+export interface ICompanyProfileResponse {
+	companyProfiles: ICompanyProfile[];
+}
+
+export interface CompanyProfileFiles {
+	video?: FileList;
+	story_image?: FileList;
+	why_us_image?: FileList;
 }
