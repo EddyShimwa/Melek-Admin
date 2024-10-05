@@ -51,14 +51,25 @@ class APIClient<T, RequestType = void> {
 	fetch = (config: AxiosRequestConfig) =>
 		API.get<FetchResponse<T>>(this.endpoint, config).then((res) => res.data);
 
-	post = (data: RequestType, config?: AxiosRequestConfig) =>
-		API.post<T>(this.endpoint, data, config).then((res) => res.data);
-
-	update = (data: RequestType, config?: AxiosRequestConfig) =>
-		API.patch<FetchResponse<T>>(this.endpoint, data, config).then(
+	post = (data: RequestType, config?: AxiosRequestConfig) => {
+		const isFormData = data instanceof FormData;
+		const headers = isFormData ? { "Content-Type": "multipart/form-data" } : {};
+		return API.post<T>(this.endpoint, data, { ...config, headers }).then(
 			(res) => res.data,
 		);
+	};
+
+	update = (data: RequestType, config?: AxiosRequestConfig) => {
+		const isFormData = data instanceof FormData;
+		const headers = isFormData ? { "Content-Type": "multipart/form-data" } : {};
+		return API.patch<FetchResponse<T>>(this.endpoint, data, {
+			...config,
+			headers,
+		}).then((res) => res.data);
+	};
+
 	delete = (config?: AxiosRequestConfig) =>
 		API.delete<FetchResponse<T>>(this.endpoint, config).then((res) => res.data);
 }
+
 export default APIClient;
