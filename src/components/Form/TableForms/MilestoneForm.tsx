@@ -13,6 +13,7 @@ import FormButton from "../FormButton";
 import FormField from "../FormField";
 import SelectField from "../SelectField";
 import TextAreaField from "../TextAreaField";
+import IconLoader from "../../common/IconLoader";
 
 interface Props {
 	toggleModal: () => void;
@@ -90,7 +91,17 @@ const MilestoneForm: FC<Props> = ({ toggleModal, milestone }) => {
 				<FormButton
 					type="submit"
 					icon={<FaPlus />}
-					text={milestone ? "Update" : "Create"}
+					text={
+						addMilestone.isPending || updateMilestone.isPending ? (
+							<>
+								<IconLoader className="animate-spin" /> {"loading"}
+							</>
+						) : milestone ? (
+							"Update"
+						) : (
+							"Create"
+						)
+					}
 					disabled={updateMilestone.isPending || addMilestone.isPending}
 				/>
 			</div>

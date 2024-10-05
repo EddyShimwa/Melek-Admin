@@ -48,7 +48,7 @@ const useAddCompanyProfile = () =>
 		},
 		onSuccess: (data) => {
 			queryClient.invalidateQueries({
-				queryKey: ["CompanyProfiles"],
+				queryKey: ["company_profile"],
 			});
 			toastSuccess(data.message);
 		},

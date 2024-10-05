@@ -15,6 +15,7 @@ import FormButton from "../FormButton";
 import FormField from "../FormField";
 import InputField from "../InputField";
 import TextAreaField from "../TextAreaField";
+import IconLoader from "../../common/IconLoader";
 
 interface Props {
 	id: string;
@@ -80,7 +81,17 @@ const OfferContentForm: FC<Props> = ({ id, toggleModal, offerContent }) => {
 				<FormButton
 					type="submit"
 					icon={<FaPlus />}
-					text={offerContent ? "Update" : "Create"}
+					text={
+						addOfferContent.isPending || updateOfferContent.isPending ? (
+							<>
+								<IconLoader className="animate-spin" /> {"loading"}
+							</>
+						) : offerContent ? (
+							"Update"
+						) : (
+							"Create"
+						)
+					}
 					disabled={updateOfferContent.isPending || addOfferContent.isPending}
 				/>
 			</div>

@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import ValuesTable from "./components/tables/ValuesTable";
 import AppLayout from "./Layouts/AppLayout";
-import CompanyProfile from "./pages/dashboard/company-profile";
+import CompanyProfile from "./pages/dashboard/CompanyProfile";
 import Dashboard from "./pages/dashboard/dashboard";
 import Milestones from "./pages/dashboard/Milestones";
 import Offers from "./pages/dashboard/offers";

@@ -49,7 +49,7 @@ const useUpdateCompanyProfile = () => {
 		},
 		onSuccess: (data) => {
 			queryClient.invalidateQueries({
-				queryKey: ["CompanyProfile"],
+				queryKey: ["company_profile"],
 			});
 			toastSuccess(data.message || "Company profile updated successfully");
 		},

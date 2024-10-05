@@ -2,7 +2,7 @@ import { FC, ReactNode } from "react";
 
 interface Props {
 	type?: "submit" | "reset" | "button";
-	text: string;
+	text: string | ReactNode;
 	icon: ReactNode;
 	disabled: boolean;
 }

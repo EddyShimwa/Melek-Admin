@@ -3,7 +3,6 @@ import { Outlet } from "react-router-dom";
 import DashboardNav, { NavItem } from "../components/common/NavItems";
 import { SidebarData } from "../data/sideBarData";
 import ProtectedRoute from "../utils/ProtectedRoutes";
-import Footer from "../components/common/Footer";
 
 const AppLayout: React.FC = () => {
 	return (
@@ -24,8 +23,6 @@ const AppLayout: React.FC = () => {
 					<div className="flex-grow">
 						<Outlet />
 					</div>
-
-					<Footer />
 				</div>
 			</div>
 		</ProtectedRoute>

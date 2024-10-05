@@ -10,6 +10,7 @@ import FormButton from "../FormButton";
 import FormField from "../FormField";
 import InputField from "../InputField";
 import TextAreaField from "../TextAreaField";
+import IconLoader from "../../common/IconLoader";
 
 interface Props {
 	toggleModal: () => void;
@@ -73,7 +74,17 @@ const ValueForm: FC<Props> = ({ toggleModal, value }) => {
 				<FormButton
 					type="submit"
 					icon={<FaPlus />}
-					text={value ? "Update" : "Create"}
+					text={
+						addValue.isPending || updateValue.isPending ? (
+							<>
+								<IconLoader className="animate-spin" /> {"loading"}
+							</>
+						) : value ? (
+							"Update"
+						) : (
+							"Create"
+						)
+					}
 					disabled={addValue.isPending || updateValue.isPending}
 				/>
 			</div>

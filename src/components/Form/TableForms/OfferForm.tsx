@@ -9,6 +9,7 @@ import { OfferSchema, OfferSchemaType } from "../../../validations/Offer";
 import FormButton from "../FormButton";
 import FormField from "../FormField";
 import InputField from "../InputField";
+import IconLoader from "../../common/IconLoader";
 
 interface Props {
 	toggleModal: () => void;
@@ -64,7 +65,17 @@ const OfferForm: FC<Props> = ({ toggleModal, offer }) => {
 				<FormButton
 					type="submit"
 					icon={<FaPlus />}
-					text={offer ? "Update" : "Create"}
+					text={
+						addOffer.isPending || updateOffer.isPending ? (
+							<>
+								<IconLoader className="animate-spin" /> {"loading"}
+							</>
+						) : offer ? (
+							"Update"
+						) : (
+							"Create"
+						)
+					}
 					disabled={
 						addOffer.isPending || (offer ? updateOffer.isPending : false)
 					}

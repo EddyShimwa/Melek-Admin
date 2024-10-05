@@ -10,6 +10,7 @@ import FormField from "../FormField";
 import InputField from "../InputField";
 import TextAreaField from "../TextAreaField";
 import useUpdateWhyUs from "../../../hooks/whyUs/useUpdateWhyUs";
+import IconLoader from "../../common/IconLoader";
 
 interface Props {
 	toggleModal: () => void;
@@ -74,7 +75,17 @@ const WhyUsForm: FC<Props> = ({ toggleModal, whyUs }) => {
 				<FormButton
 					type="submit"
 					icon={<FaPlus />}
-					text={whyUs ? "Update" : "Create"}
+					text={
+						addWhyUs.isPending || updateWhyus.isPending ? (
+							<>
+								<IconLoader className="animate-spin" /> {"loading"}
+							</>
+						) : whyUs ? (
+							"Update"
+						) : (
+							"Create"
+						)
+					}
 					disabled={addWhyUs.isPending || updateWhyus.isPending}
 				/>
 			</div>
