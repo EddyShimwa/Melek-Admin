@@ -8,6 +8,8 @@ import Offers from "./pages/dashboard/offers";
 import WhyUs from "./pages/dashboard/why-us";
 import ErrorPage from "./pages/ErrorPage";
 import LoginForm from "./pages/loginForm";
+import Bookings from "./pages/dashboard/Bookings";
+import BookingSinglePage from "./pages/dashboard/BookingSinglePage";
 
 const router = createBrowserRouter([
 	{
@@ -21,6 +23,8 @@ const router = createBrowserRouter([
 			{ path: "milestones", element: <Milestones /> },
 			{ path: "values", element: <ValuesTable /> },
 			{ path: "company-profile", element: <CompanyProfile /> },
+			{ path: "bookings", element: <Bookings /> },
+			{ path: "bookings/:id", element: <BookingSinglePage /> },
 		],
 	},
 	{

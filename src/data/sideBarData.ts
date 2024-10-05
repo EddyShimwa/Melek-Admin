@@ -35,6 +35,11 @@ export const SidebarData: SidebarItem[] = [
 		icon: FaIcons.FaAlignJustify,
 	},
 	{
+		title: "Bookings",
+		path: "/dashboard/bookings",
+		icon: FaIcons.FaBookOpen,
+	},
+	{
 		title: "Company Profile",
 		path: "/dashboard/company-profile",
 		icon: FaIcons.FaBuilding,
