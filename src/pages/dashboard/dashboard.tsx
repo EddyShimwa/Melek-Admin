@@ -91,19 +91,19 @@ const Dashboard: React.FC = () => {
 	return (
 		<>
 			<div className="dashboard-container p-5 flex flex-col ">
-				<div className="flex flex-col md:flex-row justify-between items-center p-5 h-40 md:h-60">
+				<div className="flex flex-col lg:flex-row justify-between items-center p-2 h-40 md:h-60">
 					<div>
-						<h1 className="text-4xl font-bold text-black">
+						<h1 className="text-xl sm:text-4xl font-bold text-black">
 							{greeting}, {"\uD83D\uDC4B"}
 						</h1>
 					</div>
 
-					<div className="text-xl font-semibold text-gray-600">
+					<div className="text-xl sm:text-2xl font-semibold text-gray-600">
 						{currentTime}
 					</div>
 				</div>
 
-				<div className="text-3xl text-green-800 font-extrabold text-black p-5 w-full">
+				<div className="text-3xl flex text-center text-green-800 font-extrabold text-black p-5 w-full">
 					<h1 className="text-2xl font-bold mb-5 text-black mt-8">
 						Dashboard Overview
 					</h1>
