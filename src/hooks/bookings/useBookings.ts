@@ -5,15 +5,15 @@ import APIClient from "../../services/api-client";
 
 const apiClient = new APIClient<IBookingResponse>("/bookings");
 
-const useBookings = (querry: PaginationParams) =>
+const useBookings = (querry?: PaginationParams) =>
 	useQuery({
 		queryKey: ["bookings", querry],
 		queryFn: () =>
 			apiClient.fetch({
 				params: {
-					pageNumber: querry.pageNumber,
-					take: querry.take,
-					search: querry.search,
+					pageNumber: querry?.pageNumber,
+					take: querry?.take,
+					search: querry?.search,
 				},
 			}),
 	});

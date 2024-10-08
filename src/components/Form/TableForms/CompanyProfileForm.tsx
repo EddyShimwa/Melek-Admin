@@ -145,7 +145,7 @@ const CompanyProfileForm: FC<Props> = ({ companyProfile }) => {
 						value={companyProfile?.story_description}
 					/>
 				</FormField>
-				<FormField label="Message" htmlFor="message">
+				<FormField label="Why Statement" htmlFor="message">
 					<Editor
 						apiKey="oy3f0667dm8vv681slskj4lk254o1jhliecbm63vyl9ks6e9"
 						init={{

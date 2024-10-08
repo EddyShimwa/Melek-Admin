@@ -48,7 +48,7 @@ const BookingCard: React.FC<BookingCardProps> = ({ booking }) => {
 				</tbody>
 			</Table>
 			<div
-				className="prose max-w-none text-sm"
+				className="prose max-w-none text-sm p-5"
 				dangerouslySetInnerHTML={{ __html: booking.message }}
 			/>
 		</div>

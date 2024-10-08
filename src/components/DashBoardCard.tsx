@@ -15,7 +15,7 @@ const DashBoardCard = ({
 	path,
 }: dashboardCardProps) => {
 	return (
-		<div className="bg-white p-12 rounded-lg shadow-lg hover:scale-100 hover:bg-gray-100 flex flex-col justify-between h-60">
+		<div className="bg-app-green/20 p-12 rounded-lg shadow-lg hover:scale-100 hover:bg-gray-300 flex flex-col justify-between h-60">
 			<Link to={path} className="block h-full w-full text-center">
 				<h2 className="text-lg font-bold mb-4 h-10">{title}</h2>
 				<p className="text-sm text-gray-600 h-8">{description}</p>
