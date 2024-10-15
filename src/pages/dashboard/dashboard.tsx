@@ -90,7 +90,7 @@ const Dashboard: React.FC = () => {
 			path: "/dashboard/values",
 		},
 		{
-			title: "Excluive Offers ",
+			title: "Exclusive Offers ",
 			value: offersData?.data?.offers.length || 0,
 			description: "Our Offers",
 			path: "/dashboard/offers",
